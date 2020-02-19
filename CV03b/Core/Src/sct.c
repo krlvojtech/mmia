@@ -54,16 +54,13 @@ static const uint32_t reg_values[3][10] = {
 
 void sct_init(void)
 {
-	RCC->AHBENR |= RCC_AHBENR_GPIOBEN;
-	GPIOB->MODER |= GPIO_MODER_MODER3_0 | GPIO_MODER_MODER4_0 |GPIO_MODER_MODER5_0 | GPIO_MODER_MODER10_0; //  output
 	sct_led(0);
 	HAL_GPIO_WritePin(SCT_CLK_GPIO_Port, SCT_NOE_Pin, 0);
 }
 
 void sct_led(uint32_t value1)
 {
-	uint32_t i;
-	for(i=0;i<=31;i++)
+	for(uint32_t i=0;i<=31;i++)
 	{
 		if(value1 & 0x0000001)
 		{
