@@ -54,7 +54,7 @@ static volatile uint32_t raw_pot;
 static volatile uint32_t raw_volt;
 static volatile uint32_t raw_temp;
 
-static enum { SHOW_POT, SHOW_VOLT, SHOW_TEMP } state = SHOW_POT;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -117,15 +117,18 @@ int main(void)
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
+		static enum { SHOW_POT, SHOW_VOLT, SHOW_TEMP } state = SHOW_POT;
+		static uint32_t Tick;
+
 		if (HAL_GPIO_ReadPin(S1_GPIO_Port,S1_Pin) == 0)
 		{
 			state = SHOW_VOLT;
-			uwTick = 0;
+			Tick = HAL_GetTick();
 		}
 		if (HAL_GPIO_ReadPin(S2_GPIO_Port,S2_Pin) == 0)
 		{
 			state = SHOW_TEMP;
-			uwTick = 0;
+			Tick = HAL_GetTick();
 		}
 
 
@@ -142,7 +145,7 @@ int main(void)
 			sct_value(voltage,(voltage*9)/4096);
 			HAL_Delay(50);
 			state = SHOW_VOLT;
-			if (HAL_GetTick() > 1000)
+			if (HAL_GetTick() > (1000+Tick))
 				state = SHOW_POT;
 		}
 
@@ -155,7 +158,7 @@ int main(void)
 			sct_value(temperature,(temperature*9)/4096);
 			HAL_Delay(50);
 			state = SHOW_TEMP;
-			if (HAL_GetTick() > 1000)
+			if (HAL_GetTick() > (1000+Tick))
 				state = SHOW_POT;
 		}
 	}
