@@ -1,0 +1,7 @@
+main.c:56:10:round_closest	16	static
+main.c:67:5:main	16	static
+main.c:202:6:SystemClock_Config	80	static
+main.c:241:13:MX_ADC_Init	24	static
+main.c:293:13:MX_USART2_UART_Init	8	static
+main.c:328:13:MX_GPIO_Init	56	static
+main.c:393:6:Error_Handler	8	static
